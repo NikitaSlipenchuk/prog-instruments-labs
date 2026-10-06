@@ -1,9 +1,11 @@
 {
-  "include": ["."],
-  "exclude": [".venv", "__pycache__", ".ruff_cache", "build", "dist"],
+  "include": [ "." ],
+  "exclude": [ ".venv", "__pycache__", ".ruff_cache", "build", "dist" ],
   "typeCheckingMode": "strict",
   "pythonVersion": "3.10",
   "pythonPlatform": "All",
+  "venvPath": ".",
+  "venv": ".venv",
   "reportMissingImports": "warning",
   "reportMissingTypeStubs": "warning",
   "reportUnusedImport": "error",
