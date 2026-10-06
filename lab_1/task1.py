@@ -2,22 +2,23 @@ import argparse
 
 import pandas as pd
 
+
 def read_text(filename: str) -> str:
     """ function for read from file """
     try:
         with open(filename, encoding="utf-8") as file:
             return file.read()
     except FileNotFoundError:
-        print(f"File not found")
+        print("File not found")
         exit(2)
     except PermissionError:
-        print(f"Premision denied")
+        print("Premision denied")
         exit(2)
     except Exception as e:
         print(e)
         exit(2)
 
-    
+
 def encode_polibius(text: str, key: pd.DataFrame) -> str:
     """ encode text function """
     text = text.upper()
@@ -35,7 +36,7 @@ def encode_polibius(text: str, key: pd.DataFrame) -> str:
         elif char == ' ':
             result+= ' '
         else:
-            result+= char 
+            result+= char
     return result
 
 def decode_polibius(text: str, key: pd.DataFrame) -> str:
@@ -47,14 +48,14 @@ def decode_polibius(text: str, key: pd.DataFrame) -> str:
             cell = key.iloc[i, j]
             if cell and str(cell).strip():
                 map[f"{i+1}{j+1}"] = cell
-    
+
     result = ""
     i = 0
     while i < len(text):
         if text[i] == ' ':
             result += ' '
             i += 1
-        elif i + 1 < len(text) and text[i:i+2] in map:  
+        elif i + 1 < len(text) and text[i:i+2] in map:
             result += map[text[i:i+2]]
             i += 2
         else:
@@ -66,9 +67,9 @@ def write_text(filename: str, text: str) -> str:
     """ function for write to file """
     try:
         with open(filename, "w", encoding="utf-8") as f:
-            f.write(text)    
+            f.write(text)
     except PermissionError:
-        print(f"Permission denied")
+        print("Permission denied")
         exit(2)
     except Exception as e:
         print(e)
@@ -86,11 +87,11 @@ def main() -> None:
     args = terminal_parsing()
     text = read_text(args.input_file)
     key = pd.read_excel(args.key)
-    encode_text = encode_polibius(text, key) 
+    encode_text = encode_polibius(text, key)
     write_text(args.output_file, encode_text )
     decode_text = decode_polibius(encode_text, key)# check, that decode work
     print(decode_text)
 
-        
+
 if __name__ == "__main__":
     main()
