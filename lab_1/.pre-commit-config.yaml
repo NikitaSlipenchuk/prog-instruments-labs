@@ -1,0 +1,37 @@
+files: ^lab_1/
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: mixed-line-ending
+        args: ["--fix=lf"]
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.9
+    hooks:
+      - id: ruff
+        name: ruff (lint)
+        args: ["--fix", "--exit-non-zero-on-fix"]
+        stages: [pre-commit]
+      - id: ruff-format
+        name: ruff (format)
+        stages: [pre-commit]
+
+  - repo: local
+    hooks:
+      - id: pyright
+        name: pyright (typecheck)
+        entry: lab_1/.venv/Scripts/pyright.exe
+        language: system
+        pass_filenames: false
+        always_run: true
+        stages: [pre-push]
+
+default_stages: [pre-commit]
+fail_fast: false
